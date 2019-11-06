@@ -15,7 +15,9 @@ class Game():
             spider = Spider(item)
             idiomsArr.append(spider.get_idioms())
 
-        print(self.filter(idiomsArr))
+        result = self.filter(idiomsArr)
+        print(result)
+        return result
 
     def filter(self, idioms):
         exitIdiom = []
