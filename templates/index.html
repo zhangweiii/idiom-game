@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>成语查询</title>
+</head>
+
+<body>
+    <input id="search" />
+    <input type="button" id="btn" value="查询"></input>
+    <p id="result"></p>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+<script>
+    $('#btn').off('click').on('click', function () {
+        $.ajax({
+            url: '/idiom/' + $('#search').val(),
+            success: function (res) {
+                $('#result')[0].innerHTML = res.data.join(' ')
+            }
+        })
+    })
+</script>
+
+</html>
