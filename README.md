@@ -10,3 +10,6 @@
 
 > ['都头异姓', '头没杯案', '杯盘狼藉', '扇枕温衾', '温衾扇枕', '藉草枕块']
 
+4. docker build --no-cache -t 'idiom' . 
+
+5. docker run -it --rm -p 5000:5000 idiom
