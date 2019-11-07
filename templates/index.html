@@ -3,22 +3,46 @@
 
 <head>
     <title>成语查询</title>
+    <style>
+        .container {
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body>
-    <input id="search" />
-    <input type="button" id="btn" value="查询"></input>
-    <p id="result"></p>
+    <div class="container" id="app">
+        <el-input style="width: 80%; float: left;" v-model="searchText" v-on:keyup.13="search"
+            placeholder="请输入游戏内所有文字包括已填写的">
+        </el-input>
+        <el-button type="primary" @click="search">查询</el-button>
+        <br />
+        <br />
+        <el-tag style="margin-left: 5px;" v-for="tag in result" :key="tag" v-text="tag"></el-tag>
+    </div>
 </body>
-<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+
+<script src="{{ url_for('static', filename='vue.js') }}"></script>
+<script src="{{ url_for('static', filename='axios.js') }}"></script>
+<!-- 引入样式 -->
+<link rel="stylesheet" href="{{ url_for('static', filename='element.css') }}">
+<!-- 引入组件库 -->
+<script src="{{ url_for('static', filename='element.js') }}"></script>
+
 <script>
-    $('#btn').off('click').on('click', function () {
-        $.ajax({
-            url: '/idiom/' + $('#search').val(),
-            success: function (res) {
-                $('#result')[0].innerHTML = res.data.join(' ')
+    var app = new Vue({
+        el: '#app',
+        data: {
+            searchText: '',
+            result: []
+        },
+        methods: {
+            search() {
+                axios.get('/idiom/' + this.searchText).then(res => {
+                    this.result = res.data.data
+                })
             }
-        })
+        }
     })
 </script>
 
