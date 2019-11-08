@@ -1,5 +1,6 @@
 from spider import Spider
 from itertools import filterfalse
+import concurrent.futures
 
 
 class Game():
@@ -10,14 +11,18 @@ class Game():
         """
         开始
         """
-        idiomsArr = []
-        for item in self.all_text:
-            spider = Spider(item)
-            idiomsArr.append(spider.get_idioms())
+        with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
+            futureArr = []
+            for item in self.all_text:
+                spider = Spider(item)
+                r = executor.submit(spider.get_idioms)
+                futureArr.append(r)
+            resultArr = []
+            for future in concurrent.futures.as_completed(futureArr):
+                resultArr.append(future.result())
 
-        result = self.filter(idiomsArr)
-        print(result)
-        return result
+            result = self.filter(resultArr)
+            return result
 
     def filter(self, idioms):
         exitIdiom = []

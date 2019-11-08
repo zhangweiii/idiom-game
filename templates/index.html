@@ -12,10 +12,10 @@
 
 <body>
     <div class="container" id="app">
-        <el-input style="width: 80%; float: left;" v-model="searchText" v-on:keyup.13="search"
+        <el-input style="width: 80%; float: left;" v-model="searchText" @keyup.enter="search"
             placeholder="请输入游戏内所有文字包括已填写的">
         </el-input>
-        <el-button type="primary" @click="search">查询</el-button>
+        <el-button type="primary" @click="search" v-loading="loading">查询</el-button>
         <br />
         <br />
         <el-tag style="margin-left: 5px;" v-for="tag in result" :key="tag" v-text="tag"></el-tag>
@@ -34,12 +34,15 @@
         el: '#app',
         data: {
             searchText: '',
-            result: []
+            result: [],
+            loading: false
         },
         methods: {
             search() {
+                this.loading = true
                 axios.get('/idiom/' + this.searchText).then(res => {
                     this.result = res.data.data
+                    this.loading = false
                 })
             }
         }
