@@ -39,6 +39,9 @@
         },
         methods: {
             search() {
+                if (this.loading) {
+                    return
+                }
                 this.loading = true
                 axios.get('/idiom/' + this.searchText).then(res => {
                     this.result = res.data.data
