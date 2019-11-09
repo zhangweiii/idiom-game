@@ -2,19 +2,30 @@
 
 成语答案生成
 
+体验地址 [demo](http://idiom.zhangwei.ink)
+
+## 安装依赖
+
 1. pip install poetry
 
 2. poetry install
 
-3. python .\run.py 都案杯没头盘异扇狼姓块枕草藉温衾
+## 以命令行方式运行
+
+1. python .\run.py 都案杯没头盘异扇狼姓块枕草藉温衾
 
     > ['都头异姓', '头没杯案', '杯盘狼藉', '扇枕温衾', '温衾扇枕', '藉草枕块']
 
-4. docker build --no-cache -t 'idiom' . 
+## 部署为网站
 
-5. docker run -it --rm -p 5000:5000 idiom
+1. gunicorn app:app -c gunicorn.conf.py
 
-6. 访问`http://localhost:5000/`
+2. 访问`http://localhost:5000/`
 
+## 以docker方式部署
 
-> 其中第三条是命令行执行，4至6是部署为网站
+1. docker build --no-cache -t 'idiom' . 
+
+2. docker run -it --rm -p 5000:5000 idiom
+
+3. 访问`http://localhost:5000/`
